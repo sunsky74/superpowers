@@ -22,6 +22,8 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
 
+> **FORK TRIGGER:** Master/Phase decomposition for large requirements lives in `superpowers:acceptance-driven-plan` section 0. During Scope Check, MUST use that section to decide whether decomposition is needed. For oversized requirements, generate a Master Plan plus Phase/Sub-flow Plans: the Master Plan tracks only Final Intent, document index, Progress Ledger, AC coverage matrix, and overall progress; concrete task steps move into Phase/Sub-flow Plans. Do not generate a bloated monolithic plan.
+
 ## File Structure
 
 Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
@@ -55,10 +57,12 @@ independently testable deliverable.
 
 **Every plan MUST start with this header:**
 
+> **FORK TRIGGER:** The Plan Document Header's `Final Acceptance Checklist` section, refined from the spec draft, lives in `superpowers:acceptance-driven-plan` section 1. When generating the header, MUST insert that section after `## Global Constraints` and before `---` using the section 1 template.
+
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** Recommended execution: use superpowers:ltdd for Quality-LTDD (Subagent-Driven Development + Acceptance Gates + Final Intent Guard). Alternatives: use superpowers:subagent-driven-development for lighter subagent execution, or superpowers:executing-plans for inline checkpoint execution. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -73,13 +77,19 @@ naming and copy rules, platform requirements — one line each, with exact
 values copied verbatim from the spec. Every task's requirements implicitly
 include this section.]
 
+[//]: # (FORK: Insert the Final Acceptance Checklist section here; see superpowers:acceptance-driven-plan section 1.)
+
 ---
 ```
 
 ## Task Structure
 
+> **FORK TRIGGER:** The Task Structure fields `Level / Level Rationale / Linked Acceptance Items / Task Gate` live in `superpowers:acceptance-driven-plan` section 2. For every task, MUST insert those four Level/Gate fields after `### Task N:` and before `**Files:**` using the section 2 template.
+
 ````markdown
 ### Task N: [Component Name]
+
+[//]: # (FORK: Insert Level / Level Rationale / Linked Acceptance Items / Task Gate fields here; see superpowers:acceptance-driven-plan section 2.)
 
 **Files:**
 - Create: `exact/path/to/file.py`
@@ -125,6 +135,8 @@ git commit -m "feat: add specific feature"
 ```
 ````
 
+> **FORK TRIGGER:** The L1-L3 decision table lives in `superpowers:acceptance-driven-plan` section 3: L1 = no behavior change, L2 = local behavior change, L3 = cross-module or business-flow change. When assigning each task's Level and Task Gate, MUST use that table and write the Level Rationale. Any behavior change is at least L2.
+
 ## No Placeholders
 
 Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
@@ -151,19 +163,19 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 
+> **FORK TRIGGER:** Acceptance-driven Self-Review additions (#4-#11: decomposition decision, Master/Phase completeness, Level completeness, Task Gate completeness, L3 AC binding, final acceptance coverage, executable final acceptance checklist, source consistency with spec) live in `superpowers:acceptance-driven-plan` section 5. During Self-Review, MUST append those checks.
+
 If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
 ## Execution Handoff
 
-After saving the plan, offer execution choice:
+> **FORK TRIGGER:** The three-way Execution Handoff (Quality-LTDD recommended / Subagent-Driven / Inline Execution) lives in `superpowers:acceptance-driven-plan` section 4. After saving the plan, MUST present the three-way handoff using that template. This fork replaces the upstream two-option handoff and makes Quality-LTDD the recommended option.
 
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
+After saving the plan, offer execution choice — see `superpowers:acceptance-driven-plan` §4 for the exact three-way handoff text (Quality-LTDD recommended / Subagent-Driven / Inline Execution) and the option-relationship explanation.
 
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
-
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
-
-**Which approach?"**
+**If Quality-LTDD chosen:**
+- **REQUIRED SUB-SKILL:** Use superpowers:ltdd
+- SDD + Acceptance Gates + Final Intent Guard
 
 **If Subagent-Driven chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development

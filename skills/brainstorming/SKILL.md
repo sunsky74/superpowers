@@ -24,6 +24,9 @@ You MUST create a task for each of these items and complete them in order:
 1. **Explore project context** — check files, docs, recent commits
 2. **Offer the visual companion just-in-time** — NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
+
+   > **FORK TRIGGER:** After open exploration and before clarification questions, **MUST** use `superpowers:three-pillars` to decide Three Pillars applicability and project type. If applicability is `yes` or `partial`, use its section 4 A -> B -> C1 -> C2 inquiry framework for follow-up questions and its section 5 templates for the design's `Three Pillars` and `Final Acceptance Checklist (Draft)` sections. If applicability is `no`, it may be skipped. See `skills/three-pillars/SKILL.md`.
+
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
 6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
@@ -72,6 +75,8 @@ digraph brainstorming {
 - Only one question per message - if a topic needs more exploration, break it into multiple questions
 - Focus on understanding: purpose, constraints, success criteria
 
+> **FORK TRIGGER:** The Three Pillars inquiry framework (A -> B -> C1 -> C2) and design output templates (`Three Pillars` + `Final Acceptance Checklist Draft`) live in `superpowers:three-pillars`. After this skill triggers it in Checklist item 3, ask according to its section 4 and produce design sections according to its section 5. The upstream `Exploring approaches` and `Presenting the design` flow continues below.
+
 **Exploring approaches:**
 
 - Propose 2-3 different approaches with trade-offs
@@ -85,6 +90,8 @@ digraph brainstorming {
 - Ask after each section whether it looks right so far
 - Cover: architecture, components, data flow, error handling, testing
 - Be ready to go back and clarify if something doesn't make sense
+
+> **FORK TRIGGER:** Design output templates for the header, `Three Pillars`, and `Final Acceptance Checklist Draft` live in `superpowers:three-pillars` section 5. When writing the design document, structure those sections using that template.
 
 **Design for isolation and clarity:**
 
@@ -116,6 +123,8 @@ After writing the spec document, look at it with fresh eyes:
 3. **Scope check:** Is this focused enough for a single implementation plan, or does it need decomposition?
 4. **Ambiguity check:** Could any requirement be interpreted two different ways? If so, pick one and make it explicit.
 
+> **FORK TRIGGER:** Three Pillars Self-Review additions (#5-#11: applicability decision, project type decision, Three Pillars completeness, AC traceability, coverage matrix, inquiry framework coverage, project type consistency) live in `superpowers:three-pillars` section 6. During Self-Review, if Checklist item 3 triggered Three Pillars with `yes` or `partial`, MUST append those checks.
+
 Fix any issues inline. No need to re-review — just fix and move on.
 
 **User Review Gate:**
@@ -129,6 +138,14 @@ Wait for the user's response. If they request changes, make them and re-run the 
 
 - Invoke the writing-plans skill to create a detailed implementation plan
 - Do NOT invoke any other skill. writing-plans is the next step.
+
+## Red Flags
+
+These thoughts mean STOP — you're rationalizing:
+
+> **FORK TRIGGER:** Three Pillars Red Flags live in `superpowers:three-pillars` section 7. After this skill triggers Three Pillars, MUST follow that Red Flags table.
+
+This skill's own Red Flags remain the upstream ones: simple requirements still require design, and user approval is still mandatory.
 
 ## Key Principles
 

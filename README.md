@@ -1,7 +1,8 @@
-# Superpowers
+# Superpowers Quality-LTDD Fork
 
-Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
+This is Sunsky's experimental fork of [obra/superpowers](https://github.com/obra/superpowers), based on upstream v6.1.1. It keeps the Superpowers skill bootstrap, then adds an experimental Quality-LTDD workflow: Three Pillars brainstorming, acceptance-driven planning, task Levels, task gates, and LTDD execution.
 
+This fork is intended for personal dogfooding and internal trials. It is not the upstream release, not production-certified, and not ready for an upstream PR without skill-behavior evals and real session transcripts.
 
 ## We're Hiring!
 
@@ -9,19 +10,27 @@ We're hiring someone to help out full time with Superpowers community and code w
 You can read about the job at https://primeradiant.com/jobs/superpowers-community-engineer/
 If this sounds like someone you know, definitely send them our way.
 
+## Fork Status
+
+- **Version:** `6.1.1-quality-ltdd.0`
+- **Fork owner:** Sunsky
+- **Upstream base:** `obra/superpowers` v6.1.1
+- **Experimental workflow:** Quality-LTDD, combining Subagent-Driven Development, acceptance gates, and a Final Intent guard
+- **Production status:** experimental; use for dogfood/internal workflows before making it a team default
+
 ## Quickstart
 
 Give your agent Superpowers: [Claude Code](#claude-code), [Antigravity](#antigravity), [Codex App](#codex-app), [Codex CLI](#codex-cli), [Cursor](#cursor), [Factory Droid](#factory-droid), [GitHub Copilot CLI](#github-copilot-cli), [Kimi Code](#kimi-code), [OpenCode](#opencode), [Pi](#pi).
 
 ## How it works
 
-It starts from the moment you fire up your coding agent. As soon as it sees that you're building something, it *doesn't* just jump into trying to write code. Instead, it steps back and asks you what you're really trying to do. 
+It starts from the moment you fire up your coding agent. As soon as it sees that you're building something, it *doesn't* just jump into trying to write code. Instead, it steps back and asks you what you're really trying to do.
 
-Once it's teased a spec out of the conversation, it shows it to you in chunks short enough to actually read and digest. 
+In this fork, brainstorming also routes technical work through the Three Pillars: overall business flow, current requirement flow, and current requirement technical architecture. The result is a design document with a draft final acceptance checklist.
 
-After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
+After you've signed off on the design, your agent puts together an acceptance-driven implementation plan. Plans include global constraints, refined acceptance items, task Levels (`L1`, `L2`, `L3`), linked acceptance items, and task gates.
 
-Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for your agent to work autonomously for a couple hours at a time without deviating from the plan you put together.
+Next up, once you say "go", the recommended path is experimental *Quality-LTDD*: subagent-driven implementation plus task-level acceptance gates, a final whole-product review, and plan-level acceptance. The upstream `subagent-driven-development` and `executing-plans` paths remain available as lighter alternatives.
 
 There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
 
@@ -191,9 +200,9 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 
 2. **using-git-worktrees** - Activates after design approval. Creates isolated workspace on new branch, runs project setup, verifies clean test baseline.
 
-3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks (2-5 minutes each). Every task has exact file paths, complete code, verification steps.
+3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks. In this fork, every executable task also gets a Level, linked acceptance items, and a Task Gate.
 
-4. **subagent-driven-development** or **executing-plans** - Activates with plan. Dispatches fresh subagent per task with two-stage review (spec compliance, then code quality), or executes in batches with human checkpoints.
+4. **ltdd** (experimental, recommended in this fork), **subagent-driven-development**, or **executing-plans** - Activates with plan. Quality-LTDD adds task acceptance gates, final review, and plan-level acceptance around the subagent-driven path; the other two options remain lighter execution modes.
 
 5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
 
@@ -217,6 +226,9 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 **Collaboration** 
 - **brainstorming** - Socratic design refinement
 - **writing-plans** - Detailed implementation plans
+- **three-pillars** - Experimental fork skill for business-flow-driven brainstorming and draft acceptance criteria
+- **acceptance-driven-plan** - Experimental fork skill for final acceptance checklists, task Levels, and task gates
+- **ltdd** - Experimental fork skill for Quality-LTDD execution
 - **executing-plans** - Batch execution with checkpoints
 - **dispatching-parallel-agents** - Concurrent subagent workflows
 - **requesting-code-review** - Pre-review checklist
