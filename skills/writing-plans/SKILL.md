@@ -13,6 +13,11 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
+**Entry gate:** This skill may start only after brainstorming's `written-spec`
+gate is explicitly approved. Approval of a design section or the complete
+design does not authorize plan generation. If written-spec approval is absent
+or ambiguous, return to that gate and apply `USER-INPUT-GATE`.
+
 **Context:** If working in an isolated worktree, it should have been created via the `superpowers:using-git-worktrees` skill at execution time.
 
 **Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
@@ -23,6 +28,12 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
 
 > **FORK TRIGGER:** Master/Phase decomposition for large requirements lives in `superpowers:acceptance-driven-plan` section 0. During Scope Check, MUST use that section to decide whether decomposition is needed. For oversized requirements, generate a Master Plan plus Phase/Sub-flow Plans: the Master Plan tracks only Final Intent, document index, Progress Ledger, AC coverage matrix, and overall progress; concrete task steps move into Phase/Sub-flow Plans. Do not generate a bloated monolithic plan.
+
+If decomposition is required but the approved spec does not already define it,
+present the proposed split, apply the `plan-decomposition` gate from
+`superpowers:acceptance-driven-plan`, and stop. Do not write any plan until the
+user approves the split. If decomposition is not required, continue without
+asking for confirmation.
 
 ## File Structure
 
@@ -171,7 +182,10 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 > **FORK TRIGGER:** The three-way Execution Handoff (Quality-LTDD recommended / Subagent-Driven / Inline Execution) lives in `superpowers:acceptance-driven-plan` section 4. After saving the plan, MUST present the three-way handoff using that template. This fork replaces the upstream two-option handoff and makes Quality-LTDD the recommended option.
 
-After saving the plan, offer execution choice — see `superpowers:acceptance-driven-plan` §4 for the exact three-way handoff text (Quality-LTDD recommended / Subagent-Driven / Inline Execution) and the option-relationship explanation.
+After saving the plan, offer execution choice and apply `USER-INPUT-GATE` — see
+`superpowers:acceptance-driven-plan` section 4 for the exact three-way handoff
+text and the `execution-choice` gate. Do not invoke an execution skill until
+the user chooses an option.
 
 **If Quality-LTDD chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:ltdd

@@ -51,7 +51,17 @@ Decompose when any of these conditions apply:
 - there are phases or sub-flows that can be delivered and accepted independently
 - different parts have clearly different risk models, such as payment, authorization, data migration, and ordinary UI
 
-If the design/spec is already split into Master + Phase documents, `writing-plans` MUST generate Master Plan + Phase Plans using that split. If the design/spec is too large but not split, `writing-plans` MUST propose a decomposition and ask for user confirmation before generating a giant plan.
+If the design/spec is already split into Master + Phase documents, `writing-plans` MUST generate Master Plan + Phase Plans using that approved split. If the design/spec is too large but not split, `writing-plans` MUST propose a decomposition and apply the `plan-decomposition` gate:
+
+1. Present the proposed phases or sub-flows and their boundaries.
+2. Ask exactly one question requesting approval as the final response.
+3. Apply `USER-INPUT-GATE` and end the turn.
+4. Generate no Master Plan or Phase Plan until a new user message explicitly
+   approves the decomposition.
+
+An acknowledgement, silence, or approval of the written spec does not approve
+the decomposition. If decomposition is not required, record the reason and
+continue without a confirmation question.
 
 ### 0.2 Decomposition Priority
 
@@ -244,6 +254,11 @@ If Inline Execution is chosen:
 - **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
 - Batch execution with checkpoints for review
 ```
+
+The final question is the `execution-choice` gate. Apply `USER-INPUT-GATE` and
+end the turn immediately after asking it. A recommended option is not a
+selection. Do not invoke `ltdd`, `subagent-driven-development`, or
+`executing-plans` until a new user message explicitly chooses that option.
 
 ---
 

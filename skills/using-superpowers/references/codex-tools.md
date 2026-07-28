@@ -9,6 +9,14 @@ multi_agent = true
 
 This enables `spawn_agent`, `wait_agent`, and `close_agent` for skills like `dispatching-parallel-agents` and `subagent-driven-development`. When using subagent-driven-development, you should always close implementer and reviewer subagents when they have finished all their work.
 
+## User Input Gates
+
+A blocking user question must be sent as the final response for the current
+turn. Do not send it as commentary or a progress update.
+
+Commentary questions are non-blocking. They do not pause tool execution and
+cannot satisfy `USER-INPUT-GATE`.
+
 ## Environment Detection
 
 Skills that create worktrees or finish branches should detect their

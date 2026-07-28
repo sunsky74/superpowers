@@ -1,0 +1,12 @@
+clarification-a	It is a diagnostic command used after installation; users trigger it manually and use the result to repair their setup.
+clarification-b-pending	Thanks, please continue.
+clarification-b	Keep the four flows independently acceptable. Each reports its checks, the command returns a nonzero exit code on failures, and it makes no changes.
+clarification-c1	Reuse the existing CLI entrypoint and filesystem checks; add no dependency or service.
+clarification-c2	I don't know; skip this angle.
+approach-choice	Choose approach 1.
+design-section-1	This section is approved.
+design-section-2	This section is approved.
+complete-design	I approve the complete design and authorize writing and committing the spec.
+written-spec	I approve the written spec and authorize writing the implementation plan.
+plan-decomposition	I approve the proposed plan decomposition.
+execution-choice	Choose Inline Execution. Do not begin execution in this test.

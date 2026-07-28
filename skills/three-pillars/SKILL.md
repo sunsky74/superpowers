@@ -23,7 +23,8 @@ The Three Pillars are first a mandatory inquiry framework during brainstorming, 
 
 **Triggers:**
 
-- `brainstorming` reaches the end of Checklist item 3, after open exploration and before clarification questions
+- `brainstorming` has completed project-context exploration and is about to ask
+  its first clarification question
 - the user explicitly asks for `three pillars`, `business-flow-driven questions`, or structured business-flow inquiry
 
 **Inputs:**
@@ -34,10 +35,33 @@ The Three Pillars are first a mandatory inquiry framework during brainstorming, 
 **Outputs to brainstorming:**
 
 - `Three Pillars applicability: yes/no/partial` plus rationale, written into the design header
-- if `yes` or `partial`: results from the four inquiry angles, with at least one question per angle
+- if `yes` or `partial`: a Three Pillars Inquiry Record for all four angles
 - if `yes` or `partial`: the design's `Three Pillars` section and `Final Acceptance Checklist (Draft)` section
 
 **Announce at start:** "I'm using the three-pillars skill to drive the structured inquiry and design output."
+
+### Three Pillars Inquiry Record
+
+For each angle, record exactly one state:
+
+| Angle | Status | Evidence or skip reason |
+|---|---|---|
+| A | pending | |
+| B | pending | |
+| C1 | pending | |
+| C2 | pending | |
+
+Allowed status transitions are `pending | answered | explicitly-skipped`:
+
+- `pending` — the required decision information is not yet sufficient;
+- `answered` — the user's response supplies sufficient decision information;
+- `explicitly-skipped` — the user explicitly says they do not know, cannot
+  answer, or want to skip the angle; record their reason.
+
+Ask exactly one question per turn and apply `USER-INPUT-GATE` after it. An
+ambiguous or unrelated response leaves the current angle `pending`. Absence of an answer never changes `pending` to `explicitly-skipped`. Any `pending` angle
+blocks approach selection and design generation. Consume the design templates
+only after all required angles are `answered` or `explicitly-skipped`.
 
 ---
 
@@ -171,7 +195,9 @@ You are now entering the Three Pillars inquiry phase. First make two decisions:
 1. **Applicability:** Does this requirement involve technical or coding work? Use yes / no / partial according to three-pillars section 1.
 2. **Project type:** What is the main deliverable? Use business-backend / general-backend / frontend / cli-or-sdk / data-pipeline / config-or-docs according to three-pillars section 2.
 
-After those decisions, ask clarification questions in section 4 order: A -> B -> C1 -> C2. Ask at least one question per angle. The user's answers flow into the design's Three Pillars section.
+After those decisions, ask clarification questions in section 4 order: A -> B
+-> C1 -> C2. Complete the inquiry record before producing approaches or design.
+The user's confirmed answers flow into the design's Three Pillars section.
 ```
 
 ---
@@ -182,7 +208,9 @@ This section is mandatory when section 1 decides `yes` or `partial`.
 
 The following wording uses **business-backend** as the baseline. For other project types, replace the concrete terms using section 2.2.
 
-The Three Pillars are not just an output template. They are the mandatory clarification framework. Questions MUST cover the following four angles in order, with at least one question per angle.
+The Three Pillars are not just an output template. They are the mandatory
+clarification framework. Questions MUST cover the following four angles in
+order and collect sufficient information or an explicit skip for each angle.
 
 ### Angle A - Overall Business Flow
 
@@ -228,9 +256,12 @@ For `business-backend`, clarify at least:
 ### Inquiry Order and Constraints
 
 1. After open exploration, MUST ask in A -> B -> C1 -> C2 order.
-2. Ask at least one question per angle. Do not skip an angle because it seems simple.
-3. User answers flow directly into the matching design subsection.
-4. If the user cannot or will not answer an angle, mark that angle `Unclarified` and continue. Do not silently skip it.
+2. Ask exactly one question per turn and apply `USER-INPUT-GATE`.
+3. Do not advance until the current angle is `answered` or
+   `explicitly-skipped`; one question is not automatically sufficient.
+4. User-confirmed answers flow directly into the matching design subsection.
+5. If the user explicitly cannot or will not answer, mark the angle
+   `explicitly-skipped` with their reason. Never infer a skip from silence.
 
 ---
 
@@ -263,10 +294,15 @@ Project type: <type> - Rationale: ... (only when applicability is yes or partial
 ### Current Requirement Technical Architecture
 
 #### Development Architecture
-[Code organization and layers: controller/service/DAO for business-backend; components/hooks/utils/stores for frontend; commands/options/handlers for cli-or-sdk. Replace by project type using section 2.2. Be explicit about how code is organized.]
+[Code organization and layers: controller/service/DAO for business-backend; components/hooks/utils/stores for frontend; commands/options/handlers for cli-or-sdk. Replace by project type using section 2.2. Be explicit about how code is organized. Source: project context + user-selected approach.]
 
-#### Technical Architecture
-[Middleware, infrastructure, or dependencies introduced or reused. Replace by project type using section 2.2. Explain what problem they solve in the business flow: stability, concurrency, throughput, observability. Source: Angle C1 + C2 answers. If none are introduced, explicitly say "This requirement needs no new X, because ..."]
+#### Existing Architecture Fit
+[Existing middleware, infrastructure, dependencies, and gaps. Replace by
+project type using section 2.2. Source: Angle C1 answer.]
+
+#### New Architecture Enablement
+[New technical elements and the concrete benefit each provides. Source: Angle
+C2 answer. If none are introduced, say why.]
 ```
 
 ### 5.3 Final Acceptance Checklist Draft
@@ -278,15 +314,17 @@ Each acceptance item MUST explicitly name its source. The source MUST point to o
 
 - [AC-1] (Source: Overall Business Flow) Verify ... [expected result]
 - [AC-2] (Source: Current Requirement Flow) Verify ... [expected result]
-- [AC-3] (Source: Technical Architecture.Development Architecture) Verify ... [expected result]
-- [AC-4] (Source: Technical Architecture.Technical Architecture) Verify ... [expected result]
+- [AC-3] (Source: Development Architecture) Verify ... [expected result]
+- [AC-4] (Source: Existing Architecture Fit) Verify ... [expected result]
+- [AC-5] (Source: New Architecture Enablement) Verify ... [expected result]
 ```
 
 **Hard constraints:**
 
 - Every AC MUST have an explicit `Source`.
 - Do not use vague sources such as `combined`, `overall`, or `general`.
-- Every Three Pillars subsection must be covered by at least one AC.
+- Every answered Three Pillars subsection must be covered by at least one AC.
+- For an explicitly skipped subsection, record `Not applicable - <user-confirmed reason>` instead of inventing an AC.
 
 ---
 
@@ -296,10 +334,10 @@ Append these checks after brainstorming's original Self-Review items:
 
 - **#5 Applicability decision exists:** the design header has `Three Pillars applicability: yes/no/partial` plus rationale. Missing line means the decision was skipped.
 - **#6 Project type decision exists:** when applicability is `yes` or `partial`, the design header has `Project type: <type>` plus rationale.
-- **#7 Three Pillars completeness:** when applicability is `yes`, all four subsections are present and non-empty.
-- **#8 AC traceability:** when applicability is `yes`, every AC has a clear source that points back to the Three Pillars.
-- **#9 Coverage matrix:** when applicability is `yes`, every Three Pillars subsection is covered by at least one AC.
-- **#10 Inquiry framework coverage:** when applicability is `yes`, A / B / C1 / C2 each had at least one question in the brainstorming conversation or notes; unanswered angles are explicitly marked `Unclarified`.
+- **#7 Three Pillars completeness:** when applicability is `yes` or `partial`, every angle is `answered` or `explicitly-skipped`; no angle remains `pending`.
+- **#8 AC traceability:** when applicability is `yes` or `partial`, every AC has a clear source that points back to the Three Pillars.
+- **#9 Coverage matrix:** when applicability is `yes` or `partial`, every answered Three Pillars subsection is covered by at least one AC and every explicit skip records the user's reason.
+- **#10 Inquiry framework coverage:** when applicability is `yes` or `partial`, A / B / C1 / C2 each has sufficient confirmed information or a user-confirmed explicit skip.
 - **#11 Project type consistency:** when applicability is `yes` or `partial`, the questions and design content match the selected project type.
 
 **Extra check for `no`:** re-evaluate whether the requirement will truly change zero lines of code. If it does involve code, change the decision to `yes` and complete Three Pillars.
@@ -324,6 +362,8 @@ These thoughts mean STOP; you are rationalizing:
 | "This is frontend/CLI/data work, so middleware questions don't apply and I can skip Three Pillars." | Use the project-type template instead of skipping the skeleton. |
 | "I'll just mark everything business-backend." | Project type changes the question content. Choose it honestly. |
 | "`partial` means half the framework." | `partial` still uses all four angles; irrelevant angles may only be compressed to one confirmation question. |
+| "The user did not answer, so I can mark it unclarified and continue." | No response leaves the angle `pending`; only an explicit user message can answer or skip it. |
+| "I asked once, so this angle is complete." | A question does not complete an angle; sufficient user evidence or an explicit skip does. |
 
 ---
 

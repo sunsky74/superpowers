@@ -23,6 +23,23 @@ This is not negotiable. You cannot rationalize your way out of this.
 
 Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
 
+## User Input Gate
+
+When a workflow requires a user answer, choice, review, confirmation, or
+approval, apply `USER-INPUT-GATE`:
+
+1. Present only the information needed for that single decision.
+2. Ask exactly one decision question as the final user-facing content.
+3. End the current turn immediately.
+4. Perform no tools, writes, commits, skill transitions, or later workflow
+   steps after asking.
+5. Resume only after a new user message addresses the pending decision.
+
+Silence, a missing answer, an unrelated response, an ambiguous acknowledgement,
+or the agent's recommendation does not satisfy the gate. Approval satisfies
+only the currently pending gate. A user may authorize stated defaults or skips
+only for the scope they explicitly identify.
+
 ## Skill Priority
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
