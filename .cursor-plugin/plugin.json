@@ -2,7 +2,7 @@
   "name": "superpowers",
   "displayName": "Superpowers Quality-LTDD Fork",
   "description": "Sunsky experimental Quality-LTDD fork: TDD, debugging, acceptance-driven planning, and LTDD workflows.",
-  "version": "6.1.1-quality-ltdd.0",
+  "version": "6.3.0-quality-ltdd.0",
   "author": {
     "name": "Sunsky"
   },

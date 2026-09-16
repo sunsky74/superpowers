@@ -8,7 +8,7 @@
     {
       "name": "superpowers",
       "description": "Sunsky experimental Quality-LTDD fork of Superpowers for Claude Code.",
-      "version": "6.1.1-quality-ltdd.0",
+      "version": "6.3.0-quality-ltdd.0",
       "source": "./",
       "author": {
         "name": "Sunsky"
