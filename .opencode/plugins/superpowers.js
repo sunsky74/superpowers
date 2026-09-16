@@ -84,6 +84,9 @@ When skills request actions, substitute OpenCode equivalents:
 - Search files → \`grep\`, \`glob\`
 - Fetch a URL → \`webfetch\`
 
+**User Input Gates (blocking questions):**
+When a skill's user-input gate requires asking one decision question and waiting, ask it with OpenCode's \`question\` tool and make that call the final action of your turn — a pending \`question\` call is what genuinely blocks for the human's answer. Never ask a blocking gate question as plain chat text: unanswered text questions are not recognized as pending, and automatic todo-continuation may resume the work without an answer.
+
 Use OpenCode's native \`skill\` tool to list and load skills.`;
 
     _bootstrapCache = `<EXTREMELY_IMPORTANT>
