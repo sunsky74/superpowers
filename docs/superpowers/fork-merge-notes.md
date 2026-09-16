@@ -63,6 +63,14 @@
 
 另外两个门禁名声明在 `skills/acceptance-driven-plan/SKILL.md`:`plan-decomposition`、`execution-choice`。
 
+### 1.4 post-sync 增补(2026-09-16,已落地 main)
+
+| # | 文件 | 说明 |
+|---|---|---|
+| 25 | `.opencode/plugins/superpowers.js` | 工具映射新增 **User Input Gates** 小节:门禁提问必须用 OpenCode `question` 工具。背景:oh-my-openagent 的 `todo-continuation-enforcer` 只豁免 pending 的 question 工具调用、不认纯文本问句——纯文本门禁会在数秒后被"继续执行"指令顶掉,表现为"问完不等回复/自动推进"。已用隔离 TUI 环境 RED(复现注入)/GREEN(question 工具提问、注入=0)验证 |
+
+> **上游 sync 注意**:该文件属上游所有,本项为 fork 新增修改;下次 merge 若遇冲突,保留上述小节。
+
 ---
 
 ## 二、上游 v6.2.0 → v6.3.0 变更概览
